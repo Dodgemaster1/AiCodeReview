@@ -78,13 +78,13 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 ### Without Docker:
 Run the application:
 ```sh
-    uvicorn src.main:app --host 0.0.0.0 --port 80
-   ```
+uvicorn src.main:app --host 0.0.0.0 --port 80
+```
 ### Using Docker:
 Run the application:
 ```sh
-  docker-compose up
-  ```
+docker-compose up
+```
 
 ## Usage
 Send a POST request to `http://localhost:80/review` with the following JSON body:
