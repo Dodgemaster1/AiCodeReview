@@ -1,0 +1,10 @@
+{
+    "api": {
+        "gemini_api_key": "YOR_API_KEY",
+        "github_token": "YOR_GITHUB_TOKEN"
+    },
+    "redis": {
+        "host": "localhost",
+        "port": 6379
+    }
+}
