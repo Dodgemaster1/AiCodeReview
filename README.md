@@ -74,17 +74,17 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 
 2. Edit the `config.json` file to include your API keys and Redis configuration (not needed when using Docker)
 
-## Running the application
+## Running the Application
 ### Without Docker:
-1. Run the application:
-    ```sh
+Run the application:
+```sh
     uvicorn src.main:app --host 0.0.0.0 --port 80
    ```
 ### Using Docker:
-1. Run the application:
-    ```sh
-    docker-compose up
-    ```
+Run the application:
+```sh
+  docker-compose up
+  ```
 
 ## Usage
 Send a POST request to `http://localhost:80/review` with the following JSON body:
@@ -114,7 +114,13 @@ Response structure:
 }
 ```
 
-## File Structure
+## Testing
+Run the tests using the following command:
+   ```sh
+   pytest -v
+   ```
+
+## Project Structure
 ```
 .
 ├── .gitignore
