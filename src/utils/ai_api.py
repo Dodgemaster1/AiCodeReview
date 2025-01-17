@@ -29,7 +29,7 @@ class AiModel:
         hashed_args: str = self.redis.hash_args(assignment_description, files_contents, candidate_level)
         cached_response: bytes | None = self.redis.get(hashed_args, prefix='get_review')
         if cached_response:
-            return cached_response.decode(errors='ignore')
+            return cached_response.decode()
 
         prompt = f'''
         Evaluate a code review of a project submitted by a programmer with skills level <candidate_level> 
@@ -39,7 +39,7 @@ class AiModel:
         <comments> (listing specific issues and suggestions), 
         <rating> (assigning a score from 1 to 10 based on project quality and candidate level), and 
         <conclusion> (providing a final grade for the candidate).
-        The output must be in JSON.
+        The output must be in JSON. Allways answer according to schema.
         <assignment_description> - {assignment_description}
         candidate_level - {candidate_level}
         file_contents - {files_contents}

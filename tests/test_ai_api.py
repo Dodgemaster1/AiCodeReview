@@ -1,16 +1,16 @@
 import pytest
-from src.utils import AiModel
+from src.utils import AiModel, RedisCache
 
 
 @pytest.fixture
 def ai_model():
-    model = AiModel()
+    model = AiModel(RedisCache())
     return model
 
 
 @pytest.mark.asyncio
 async def test_ai_model(ai_model):
-    assignment_description = "Write hello world"
+    assignment_description = "Write django app"
     files_contents = {"main.py": "print('Hello, World!')"}
     candidate_level = "Junior"
     review = await ai_model.get_review(assignment_description=assignment_description,
