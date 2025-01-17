@@ -2,8 +2,7 @@ import logging
 from fastapi import FastAPI, HTTPException
 from google.api_core.exceptions import GoogleAPIError
 from src.models import ReviewResponse, ReviewRequest
-from src.utils import get_files_contents, GitHubApiError, AiModel
-from utils import RedisCache
+from src.utils import get_files_contents, GitHubApiError, AiModel, RedisCache
 
 log = logging.getLogger('uvicorn.error')
 
