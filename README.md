@@ -72,7 +72,7 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
     mv config_example.json config.json
     ```
 
-2. Edit the `config.json` file to include your API keys and Redis configuration (not needed when using Docker)
+2. Edit the `config.json` file to include your API keys and Redis configuration
 
 ## Running the Application
 ### Without Docker:
