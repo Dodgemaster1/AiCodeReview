@@ -1,7 +1,7 @@
 # AiCodeReview
 
 ## Description
-This tool can help automate the process of reviewing coding assignments 
+This tool with simple frontend component can help automate the process of reviewing coding assignments 
 by leveraging GoogleAI API for code analysis and the GitHub API for repository access
 
 ## Features
@@ -17,7 +17,7 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 ### Using pip
 1. Clone the repository:
     ```sh
-    https://github.com/Dodgemaster1/AiCodeReview.git
+    git clone https://github.com/Dodgemaster1/AiCodeReview.git
     cd AiCodeReview
     ```
 
@@ -35,7 +35,7 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 ### Using Poetry
 1. Clone the repository:
     ```sh
-    https://github.com/Dodgemaster1/AiCodeReview.git
+    git clone https://github.com/Dodgemaster1/AiCodeReview.git
     cd AiCodeReview
     ```
 
@@ -46,7 +46,7 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 
 3. Install the dependencies:
     ```sh
-    poetry install
+    poetry install --no-root --no-dev
     ```
 
 4. Activate the virtual environment:
@@ -57,13 +57,8 @@ by leveraging GoogleAI API for code analysis and the GitHub API for repository a
 ### Using Docker
 1. Clone the repository:
     ```sh
-    https://github.com/Dodgemaster1/AiCodeReview.git
+    git clone https://github.com/Dodgemaster1/AiCodeReview.git
     cd AiCodeReview
-    ```
-
-2. Build the Docker image:
-    ```sh
-    docker-compose build
     ```
 
 ## Configuration
@@ -83,7 +78,7 @@ uvicorn src.main:app --host 0.0.0.0 --port 80
 ### Using Docker:
 Run the application:
 ```sh
-docker-compose up
+docker-compose up --build
 ```
 
 ## Usage
@@ -115,7 +110,7 @@ Response structure:
 ```
 
 ## Testing
-Run the tests using the following command:
+Run the tests using the following command (to run you should install dev dependencies via poetry):
    ```sh
    pytest -v
    ```
@@ -136,15 +131,20 @@ Run the tests using the following command:
     ├── __init__.py
     ├── main.py
     ├── models.py
-    └── utils
-        ├── __init__.py
-        ├── ai_api.py
-        ├── github_api.py
-        ├── redis.py
-        └── read_config.py
+    ├── utils
+    │   ├── __init__.py
+    │   ├── ai_api.py
+    │   ├── github_api.py
+    │   ├── redis.py
+    │   └── read_config.py
+    ├── static
+    │   ├── styles.css
+    │   └── favicon.svg
+    └── templates
+        ├── index.html
+        └── review.html
 ```
 
-To handle scaling the Coding Assignment Auto-Review Tool to manage 100+ new review requests per minute and large repositories with 100+ files, consider the following architectural solutions:
 
 ## Scaling Strategy
 

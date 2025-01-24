@@ -1,11 +1,11 @@
 from enum import Enum
-from pydantic import BaseModel, HttpUrl, field_validator, Field, ValidationError
+from pydantic import BaseModel, HttpUrl, field_validator, Field
 
 
 class CandidateLevel(Enum):
-    JUNIOR = 'Junior'
-    MIDDLE = 'Middle'
-    SENIOR = 'Senior'
+    JUNIOR: str = 'Junior'
+    MIDDLE: str = 'Middle'
+    SENIOR: str = 'Senior'
 
 
 class ReviewRequest(BaseModel):
@@ -18,6 +18,7 @@ class ReviewRequest(BaseModel):
         if value.host != 'github.com':
             raise ValueError('Only GitHub URLs are allowed')
         return value
+
 
 class ReviewResponse(BaseModel):
     found_files: str

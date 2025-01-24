@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+
+{% block review %}
+    <h2>Project files</h2>
+    {{ found_files }}
+    <h2>Comments</h2>
+    {{ comments | safe }}
+    <h2>Rating</h2>
+    {{ rating }}
+    <h2>Conclusion</h2>
+    {{ conclusion }}
+{% endblock %}

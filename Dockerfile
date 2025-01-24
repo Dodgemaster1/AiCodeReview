@@ -1,15 +1,13 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    POETRY_VERSION=1.4.0
-
-RUN pip install "poetry==$POETRY_VERSION"
+RUN pip install poetry
 
 WORKDIR /app
 
-COPY . /app
+COPY poetry.lock pyproject.toml config.json ./
 
-# Install dependencies
-RUN poetry install --no-root
+RUN poetry install --no-root --no-dev
+
+COPY src ./src
 
 CMD ["poetry", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]

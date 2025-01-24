@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Code Review</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/favicon.svg') }}" type="image/x-icon" rel="icon" >
+    <link href="{{ url_for('static', path='/favicon.svg') }}" type="image/x-icon" rel="shortcut icon">
+</head>
+<body>
+    <div class="container">
+        <h1>AI Code Review Assistant</h1>
+
+        <form action="/web_review" method="post">
+            <label for="assignment_description">Assignment description:</label>
+            <textarea id="assignment_description" name="assignment_description"
+                    rows="4">{{ assignment_description }}</textarea>
+
+            <label for="github_repo_url">GitHub repository URL:</label>
+            <input type="text" id="github_repo_url" name="github_repo_url"
+                   value="{{ github_repo_url }}">
+
+            <div class="radio-group">
+                <label><input type="radio" name="candidate_level" value="Junior" checked> Junior</label>
+                <label><input type="radio" name="candidate_level" value="Middle"> Middle</label>
+                <label><input type="radio" name="candidate_level" value="Senior"> Senior</label>
+            </div>
+
+            <input type="submit" value="Analyze Repository">
+        </form>
+
+        {% block review %}
+        {% endblock %}
+    </div>
+</body>
+</html>

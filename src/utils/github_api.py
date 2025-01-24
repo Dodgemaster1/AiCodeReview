@@ -6,7 +6,7 @@ from httpx import Response, AsyncClient, HTTPStatusError
 from pydantic import HttpUrl
 from .read_config import get_github_token
 
-log = logging.getLogger('uvicorn.error')
+log: logging.Logger = logging.getLogger('uvicorn.error')
 
 
 class GitHubApiError(Exception):
