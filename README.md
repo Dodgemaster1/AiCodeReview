@@ -82,7 +82,7 @@ docker-compose up --build
 ```
 
 ## Usage
-Send a POST request to `http://localhost:80/review` with the following JSON body:
+Go to http://127.0.0.1 in browser or send a POST request to `http://localhost:80/review` with the following JSON body:
 ```json
 {
     "assignment_description": "assignment description text",
