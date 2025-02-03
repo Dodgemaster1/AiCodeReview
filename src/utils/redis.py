@@ -1,37 +1,37 @@
+import asyncio
 import hashlib
 import json
 import logging
 import os
-from redis import Redis, exceptions
+from aiocache import RedisCache
 from .read_config import get_redis_config
 
 log = logging.getLogger('uvicorn.error')
 
-class RedisCache:
+
+class Redis:
     def __init__(self) -> None:
         config_host, config_port = get_redis_config()
         self.host: str = os.getenv('REDIS_HOST', config_host)
         self.port: int = int(os.getenv('REDIS_PORT', config_port))
+        self.is_valid = True
 
         try:
-            self.cache: Redis | None = Redis(host=self.host, port=self.port)
-            self.cache.ping()
+            self.cache: RedisCache = RedisCache(endpoint=self.host, port=self.port)
             log.info("Connected to Redis")
-        except exceptions.ConnectionError as e:
+        except Exception as e:
             log.error(f"Error connecting to Redis: {e}")
-            self.cache = None
+            self.is_valid = False
 
-    def get(self, key: str, prefix: str = '') -> bytes | None:
-        if self.cache is None:
+    async def get(self, key: str, prefix: str = '') -> bytes | None:
+        if not self.is_valid:
             return None
-        full_key: str = f"{prefix}:{key}"
-        return self.cache.get(full_key)
+        return await self.cache.get(key, namespace=prefix)
 
-    def set(self, key: str, value: str, time: int, prefix: str = '') -> None:
-        if self.cache is None:
+    async def set(self, key: str, value: str, time: int = 300, prefix: str = '') -> None:
+        if not self.is_valid:
             return
-        full_key: str = f"{prefix}:{key}"
-        self.cache.set(full_key, value, ex=time)
+        asyncio.create_task(self.cache.set(key, value, ttl=time, namespace=prefix))
 
     @staticmethod
     def hash_args(*args, **kwargs) -> str:

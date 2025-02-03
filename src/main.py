@@ -5,7 +5,7 @@ from google.api_core.exceptions import GoogleAPIError
 from pydantic import ValidationError
 from starlette.templating import Jinja2Templates
 from src.models import ReviewResponse, ReviewRequest
-from src.utils import get_files_contents, GitHubApiError, AiModel, RedisCache, ConfigError
+from src.utils import get_files_contents, GitHubApiError, AiModel, Redis, ConfigError
 
 log: logging.Logger = logging.getLogger('uvicorn.error')
 
@@ -53,7 +53,7 @@ async def review_code(request: ReviewRequest) -> ReviewResponse:
 
         files_contents: dict = await get_files_contents(request.github_repo_url)
 
-        redis: RedisCache = RedisCache()
+        redis: Redis = Redis()
         ai_model: AiModel = AiModel(redis)
 
         review_text: str = await ai_model.get_review(assignment_description=request.assignment_description,

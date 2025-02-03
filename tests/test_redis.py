@@ -1,7 +1,11 @@
-from src.utils.redis import RedisCache
+import asyncio
+from src.utils.redis import Redis
+import pytest
 
 
-def test_redis():
-    redis = RedisCache()
-    redis.set("test_key", "test_value", 10)
-    assert redis.get("test_key") == b"test_value"
+@pytest.mark.asyncio
+async def test_redis():
+    redis = Redis()
+    await redis.set("test_key", "test_value", 10)
+    await asyncio.sleep(0.1)
+    assert await redis.get("test_key") == "test_value"

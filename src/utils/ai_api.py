@@ -4,7 +4,7 @@ import google.generativeai as genai
 from google.generativeai.types import AsyncGenerateContentResponse
 from .read_config import get_gemini_api_key
 import typing_extensions as typing
-from .redis import RedisCache
+from .redis import Redis
 
 log: logging.Logger = logging.getLogger('uvicorn.error')
 
@@ -16,8 +16,8 @@ class Product(typing.TypedDict):
 
 
 class AiModel:
-    def __init__(self, redis: RedisCache) -> None:
-        self.redis: RedisCache = redis
+    def __init__(self, redis: Redis) -> None:
+        self.redis: Redis = redis
         api_key: str = get_gemini_api_key()
         genai.configure(api_key=api_key)
         self.model: genai.GenerativeModel = genai.GenerativeModel("gemini-1.5-flash",
@@ -28,9 +28,9 @@ class AiModel:
     async def get_review(self, assignment_description: str, files_contents: dict[str, str],
                          candidate_level: str) -> str:
         hashed_args: str = self.redis.hash_args(assignment_description, files_contents, candidate_level)
-        cached_response: bytes | None = self.redis.get(hashed_args, prefix='get_review')
+        cached_response: bytes | None = await self.redis.get(hashed_args, prefix='get_review')
         if cached_response is not None:
-            return cached_response.decode()
+            return cached_response
 
         prompt: str = f'''
         Evaluate a code review of a project submitted by a programmer with skills level <candidate_level> 
@@ -48,7 +48,7 @@ class AiModel:
         response: AsyncGenerateContentResponse = await self.model.generate_content_async(prompt)
         response_text: str = response.text
 
-        self.redis.set(hashed_args, response_text, time=3600, prefix='get_review')
+        await self.redis.set(hashed_args, response_text, time=3600, prefix='get_review')
         return response_text
 
     @staticmethod

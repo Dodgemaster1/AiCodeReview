@@ -1,10 +1,10 @@
 import pytest
-from src.utils import AiModel, RedisCache
+from src.utils import AiModel, Redis
 
 
 @pytest.fixture
 def ai_model():
-    model = AiModel(RedisCache())
+    model = AiModel(Redis())
     return model
 
 
